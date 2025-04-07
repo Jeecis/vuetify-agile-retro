@@ -19,7 +19,10 @@ import { useRouter } from "vue-router";
 export default {
   mounted() {
     const router = useRouter(); // Move useRouter() here
-    window.open("https://github.com", "_blank");
+    window.open(
+      "https://github.com/Jeecis/vuetify-agile-retro/issues",
+      "_blank"
+    );
     router.push({ name: "Dashboard" });
   },
 };

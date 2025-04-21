@@ -151,6 +151,7 @@ export default {
       socket: null,
       boardId: this.$route.params.id || "default-board", // Replace with actual board ID or parameter
       connected: false,
+      moveRecordCalled: false,
     };
   },
 
@@ -297,8 +298,10 @@ export default {
     },
 
     handleMoveRecord(record) {
-      console.log("Move record:", record);
-      // Find the card and update it
+      if (this.moveRecordCalled) {
+        this.moveRecordCalled = false; // Reset the flag
+        return;
+      }
       const columnIndex = this.columns.findIndex(
         (col) => col.id === record.source_column_id
       );
@@ -311,14 +314,13 @@ export default {
         const targetColumnIndex = this.columns.findIndex(
           (col) => col.id === record.target_column_id
         );
+
+        let movedCard;
         if (targetColumnIndex !== -1) {
-          const movedCard = this.columns[columnIndex].cards.splice(
-            cardIndex,
-            1
-          )[0];
+          movedCard = this.columns[columnIndex].cards.splice(cardIndex, 1)[0];
           this.columns[targetColumnIndex].cards.push(movedCard);
         }
-        // sort the cards by position
+
         this.columns[targetColumnIndex].cards.sort(
           (a, b) => a.position - b.position
         );
@@ -455,6 +457,7 @@ export default {
         let newPosition = event.newIndex;
 
         // Send move message to server
+        this.moveRecordCalled = true;
         this.sendMessage("move_record", {
           record_id: movedCard.id,
           source_column_id: this.columns[fromColumnIndex].id,

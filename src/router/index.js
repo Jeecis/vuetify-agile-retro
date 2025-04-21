@@ -19,6 +19,11 @@ routes.push(
     path: "/issue",
     name: "Issue",
     component: () => import("../pages/Issue.vue"),
+  },
+  {
+    path: "/board/:id",
+    name: "Board",
+    component: () => import("../pages/Board.vue"),
   }
 );
 

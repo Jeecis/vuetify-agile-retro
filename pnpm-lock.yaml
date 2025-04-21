@@ -20,6 +20,9 @@ importers:
       vue:
         specifier: ^3.4.31
         version: 3.5.13
+      vuedraggable:
+        specifier: ^4.1.0
+        version: 4.1.0(vue@3.5.13)
       vuetify:
         specifier: ^3.6.14
         version: 3.8.0(vite-plugin-vuetify@2.1.1)(vue@3.5.13)
@@ -1624,6 +1627,9 @@ packages:
     resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
     engines: {node: '>= 0.4'}
 
+  sortablejs@1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -1853,6 +1859,11 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  vuedraggable@4.1.0:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
 
   vuetify@3.8.0:
     resolution: {integrity: sha512-ROC0Xq2G/25ZyUpQMhaynMyXZBJY1WbOGlqOB810yubp8hfY8RlrOw+mzXJonOq6jylCY32muQ9xiJF1JPTLVA==}
@@ -3523,6 +3534,8 @@ snapshots:
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
+  sortablejs@1.14.0: {}
+
   source-map-js@1.2.1: {}
 
   string.prototype.trim@1.2.10:
@@ -3792,6 +3805,11 @@ snapshots:
       '@vue/runtime-dom': 3.5.13
       '@vue/server-renderer': 3.5.13(vue@3.5.13)
       '@vue/shared': 3.5.13
+
+  vuedraggable@4.1.0(vue@3.5.13):
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.5.13
 
   vuetify@3.8.0(vite-plugin-vuetify@2.1.1)(vue@3.5.13):
     dependencies:

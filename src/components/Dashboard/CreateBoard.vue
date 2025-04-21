@@ -50,13 +50,15 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text="Continue" @click="openContinue = false"></v-btn>
+        <v-btn text="Continue" @click="continueToBoard"></v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup>
+import router from "@/router";
+import api from "@/services/apiService";
 import { ref } from "vue";
 
 const isActive = ref(false);
@@ -66,9 +68,7 @@ const DeletionID = ref("123456");
 const boardName = ref("");
 const errorMessage = ref("");
 
-function createBoard() {
-  console.log("Create board function called");
-
+async function createBoard() {
   if (boardName.value === "") {
     console.log("Name is empty, cannot create board");
     errorMessage.value = "board name must be provided";
@@ -76,8 +76,25 @@ function createBoard() {
   }
   isActive.value = false;
 
+  try {
+    let resp = await api.createBoard({
+      name: boardName.value,
+    });
+    BoardID.value = resp.data.id;
+    DeletionID.value = resp.data.deletion_id;
+  } catch (error) {
+    console.log("Error while creating a board ", error);
+  }
+
   errorMessage.value = ""; // Clear error message if validation passes
   openContinue.value = true;
+}
+
+function continueToBoard() {
+  console.log("Continue to board function called");
+  openContinue.value = false;
+  router.push({ name: "Board", params: { id: BoardID.value } });
+  // Add logic to navigate to the created board or perform any other action
 }
 </script>
 

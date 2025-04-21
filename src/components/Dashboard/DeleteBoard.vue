@@ -20,20 +20,20 @@
             label="Board deletion ID *"
             :error="!!errorMessage"
             required
-          ></v-text-field>
+          />
         </v-col>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
 
-          <v-btn text="Close" variant="plain" @click="isActive = false"></v-btn>
+          <v-btn text="Close" variant="plain" @click="isActive = false" />
 
           <v-btn
             color="deep-orange-darken-4"
             text="Delete"
             variant="tonal"
             @click="deleteBoard"
-          ></v-btn>
+          />
         </v-card-actions>
       </v-card>
     </template>

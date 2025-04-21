@@ -32,7 +32,7 @@
             color="primary"
             text="Connect"
             variant="tonal"
-            @click="deleteBoard"
+            @click="JoinBoard"
           ></v-btn>
         </v-card-actions>
       </v-card>
@@ -41,13 +41,14 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import { ref } from "vue";
 
 const isActive = ref(false);
 const id = ref("");
 const errorMessage = ref("");
 
-function deleteBoard() {
+function JoinBoard() {
   console.log("Join board function called");
 
   if (id.value === "") {
@@ -56,6 +57,10 @@ function deleteBoard() {
     return;
   }
   isActive.value = false;
+  router.push({
+    name: "Board",
+    params: { id: id.value },
+  });
 
   errorMessage.value = "";
 }

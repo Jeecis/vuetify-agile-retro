@@ -1,6 +1,15 @@
 <template>
   <v-container fluid>
-    <h1 class="mb-4 text-center">{{ boardName }}</h1>
+    <v-row>
+      <img
+        src="../assets/logo.png"
+        alt="Logo"
+        style="width: 5rem; height: auto; cursor: pointer"
+        @click="toDashboard"
+      />
+      <h1 class="mt-4 text-center">{{ boardName }}</h1>
+    </v-row>
+
     <v-row>
       <v-col
         v-for="(column, columnIndex) in columns"
@@ -153,6 +162,7 @@ export default {
       boardId: this.$route.params.id || "default-board", // Replace with actual board ID or parameter
       connected: false,
       moveRecordCalled: false,
+      reconnectTimeout: null,
     };
   },
 
@@ -190,7 +200,7 @@ export default {
       this.connected = false;
 
       // Reconnect logic
-      setTimeout(() => {
+      this.reconnectTimeout = setTimeout(() => {
         this.initWebSocket();
       }, 3000);
     },
@@ -434,6 +444,12 @@ export default {
       }
     },
 
+    toDashboard() {
+      this.socket.close(1000, "Client is leaving");
+      clearTimeout(this.reconnectTimeout);
+      this.$router.push({ name: "Dashboard" });
+    },
+
     // Drag and drop handling
     onDragEnd(event) {
       // Update the selected card indices if the modal is open
@@ -479,6 +495,7 @@ export default {
 
   beforeUnmount() {
     if (this.socket && this.connected) {
+      clearTimeout(this.reconnectTimeout);
       this.socket.close(1000, "Client is leaving");
     }
   },

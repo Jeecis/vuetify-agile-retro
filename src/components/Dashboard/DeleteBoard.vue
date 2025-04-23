@@ -59,7 +59,7 @@ const openDeleted = ref(false);
 const id = ref("");
 const errorMessage = ref("");
 
-function deleteBoard() {
+async function deleteBoard() {
   console.log("Delete board function called");
 
   if (id.value === "") {
@@ -67,10 +67,41 @@ function deleteBoard() {
     errorMessage.value = "Invalid board deletion id";
     return;
   }
-  isActive.value = false;
 
-  errorMessage.value = ""; // Clear error message if validation passes
-  openDeleted.value = true;
+  const ws = new WebSocket(
+    `ws://localhost:8080/api/v1/board/${id.value}/ws/delete`
+  ); // Replace with your WebSocket URL
+
+  ws.onopen = () => {
+    console.log("WebSocket connection opened");
+    const deleteAction = {
+      action: "delete_board",
+      deletion_id: id.value,
+    };
+    ws.send(JSON.stringify(deleteAction));
+  };
+
+  ws.onmessage = (event) => {
+    console.log("Received message:", event.data);
+    // Handle the response from the server if needed
+  };
+
+  ws.onclose = () => {
+    console.log("WebSocket connection closed");
+    isActive.value = false;
+    errorMessage.value = ""; // Clear error message if validation passes
+    openDeleted.value = true;
+  };
+
+  ws.onerror = (error) => {
+    console.error("WebSocket error:", error);
+    errorMessage.value = "Failed to delete board. Please try again.";
+  };
+
+  // Close the WebSocket connection after a short delay
+  setTimeout(() => {
+    ws.close();
+  }, 100); // Adjust the delay as needed
 }
 </script>
 

@@ -229,6 +229,9 @@ export default {
           case "move_record":
             this.handleMoveRecord(message.payload);
             break;
+          case "delete_board":
+            this.toDashboard();
+            break;
           default:
             console.log("Unknown message action:", message.action);
         }

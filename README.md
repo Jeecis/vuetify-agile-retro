@@ -5,6 +5,7 @@ This is agile retrospective frontend that must be used together with agile retro
 
 * Must have installed `pnpm` and `node`
 
+clone this repo.
 run `pnpm i` to install dependencies
 run `pnpm dev` to run development server
 

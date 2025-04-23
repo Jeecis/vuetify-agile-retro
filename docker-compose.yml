@@ -6,12 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
-    volumes:
-      - .:/app
-    environment:
-      - NODE_ENV=development
-    command: npm run dev
+      - "3000:3000"
+    restart: unless-stopped
     networks:
       - appnet
 

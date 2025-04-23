@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <h1 class="mb-4">Agile board</h1>
+    <h1 class="mb-4 text-center">{{ boardName }}</h1>
     <v-row>
       <v-col
         v-for="(column, columnIndex) in columns"
@@ -123,6 +123,7 @@ export default {
 
   data() {
     return {
+      boardName: "Agile Board",
       columns: [
         {
           id: 1,
@@ -188,10 +189,10 @@ export default {
       });
       this.connected = false;
 
-      // // Reconnect logic
-      // setTimeout(() => {
-      //   this.initWebSocket();
-      // }, 3000);
+      // Reconnect logic
+      setTimeout(() => {
+        this.initWebSocket();
+      }, 3000);
     },
 
     onSocketError(error) {
@@ -241,6 +242,7 @@ export default {
 
     // WebSocket message handlers
     handleInitBoard(boardData) {
+      this.boardName = boardData.board.name;
       // Transform the received board data to match our component's structure
       this.columns = boardData.columns.map((column) => ({
         id: column.column.column_id,
